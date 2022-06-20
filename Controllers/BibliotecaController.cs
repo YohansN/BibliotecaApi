@@ -11,21 +11,31 @@ public class BibliotecaDataController : ControllerBase
     //Lista de objetos que contem os objetos BibliotecaData:
     private static List<BibliotecaData> biblioteca = new List<BibliotecaData>();
 
+    private readonly DataContext context;
+    public BibliotecaDataController(DataContext context)
+    {
+        this.context = context;
+    }
+
     [HttpPost("AddDados")]
     public async Task<ActionResult<List<BibliotecaData>>> AddDados(BibliotecaData livro)
     {
-        biblioteca.Add(livro);
-        return Ok(biblioteca);
+        context.BibliotecaDatas.Add(livro);
+        await this.context.SaveChangesAsync();
+
+        return Ok(await this.context.BibliotecaDatas.ToListAsync());
     }
 
     [HttpDelete("DeletarDados")]
     public async Task<ActionResult<List<BibliotecaData>>> DeletarDados(string id)
     {
         biblioteca.Remove(biblioteca.First(x => x.Id.Equals(id)));
-        return Ok(biblioteca);
+        
+        return Ok(await this.context.BibliotecaDatas.ToListAsync());
+        
     }
 
-    [HttpPut("AlterarDados")]
+    [HttpPut("{id}")]
     public async Task<ActionResult<List<BibliotecaData>>> AlterarDados(string id, string titulo, string autor)
     {
         foreach (BibliotecaData livro in biblioteca)
@@ -34,15 +44,21 @@ public class BibliotecaDataController : ControllerBase
             {
                 livro.Titulo = titulo;
                 livro.Autor = autor;
+
+                await this.context.SaveChangesAsync();
             }
-            BibliotecaData encontrado = livro;
+            else
+            {
+                return BadRequest("Livro não encontrado");
+            }
         }
-        return Ok(biblioteca);
+        return Ok(await this.context.BibliotecaDatas.ToListAsync());
+
     }
 
     [HttpGet("MostrarDados")]
     public async Task<ActionResult<List<BibliotecaData>>> MostrarDados()
     {
-        return Ok(biblioteca);
+        return Ok(await this.context.BibliotecaDatas.ToListAsync());
     }
 }

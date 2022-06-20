@@ -1,8 +1,18 @@
+global using Microsoft.EntityFrameworkCore;
+global using Pomelo.EntityFrameworkCore.MySql;
+global using Biblioteca.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    var connetionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString));
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

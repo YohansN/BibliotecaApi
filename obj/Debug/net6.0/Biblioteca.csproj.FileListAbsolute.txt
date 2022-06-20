@@ -25,3 +25,11 @@
 /home/yohans-backend/Documentos/API/Biblioteca/obj/Debug/net6.0/Biblioteca.pdb
 /home/yohans-backend/Documentos/API/Biblioteca/obj/Debug/net6.0/Biblioteca.genruntimeconfig.cache
 /home/yohans-backend/Documentos/API/Biblioteca/obj/Debug/net6.0/ref/Biblioteca.dll
+/home/yohans-backend/Documentos/API/Biblioteca/bin/Debug/net6.0/Humanizer.dll
+/home/yohans-backend/Documentos/API/Biblioteca/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.dll
+/home/yohans-backend/Documentos/API/Biblioteca/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/yohans-backend/Documentos/API/Biblioteca/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Design.dll
+/home/yohans-backend/Documentos/API/Biblioteca/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Relational.dll
+/home/yohans-backend/Documentos/API/Biblioteca/bin/Debug/net6.0/Microsoft.Extensions.Caching.Memory.dll
+/home/yohans-backend/Documentos/API/Biblioteca/bin/Debug/net6.0/MySqlConnector.dll
+/home/yohans-backend/Documentos/API/Biblioteca/bin/Debug/net6.0/Pomelo.EntityFrameworkCore.MySql.dll
