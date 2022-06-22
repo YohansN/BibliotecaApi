@@ -6,18 +6,14 @@ namespace Biblioteca.Controllers;
 [Route("biblioteca")]
 public class BibliotecaDataController : ControllerBase
 {
-    //Criando livros do tipo BibliotecaData com todos os atributos de um livro:
-    private static BibliotecaData livro = new BibliotecaData("", "", "", false);
-    //Lista de objetos que contem os objetos BibliotecaData:
-    private static List<BibliotecaData> biblioteca = new List<BibliotecaData>();
-
     private readonly DataContext context;
     public BibliotecaDataController(DataContext context)
     {
         this.context = context;
     }
 
-    [HttpPost("AddDados")]
+
+    [HttpPost("adddados")]
     public async Task<ActionResult<List<BibliotecaData>>> AddDados(BibliotecaData livro)
     {
         context.BibliotecaDatas.Add(livro);
@@ -26,37 +22,44 @@ public class BibliotecaDataController : ControllerBase
         return Ok(await this.context.BibliotecaDatas.ToListAsync());
     }
 
-    [HttpDelete("DeletarDados")]
+
+    [HttpDelete("deletardados/{id}")]
     public async Task<ActionResult<List<BibliotecaData>>> DeletarDados(string id)
     {
-        biblioteca.Remove(biblioteca.First(x => x.Id.Equals(id)));
-        
-        return Ok(await this.context.BibliotecaDatas.ToListAsync());
-        
-    }
+        var encontrarLivro = await this.context.BibliotecaDatas.FindAsync(id);
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<List<BibliotecaData>>> AlterarDados(string id, string titulo, string autor)
-    {
-        foreach (BibliotecaData livro in biblioteca)
+        if (encontrarLivro == null)
         {
-            if (livro.Id == id)
-            {
-                livro.Titulo = titulo;
-                livro.Autor = autor;
-
-                await this.context.SaveChangesAsync();
-            }
-            else
-            {
-                return BadRequest("Livro não encontrado");
-            }
+            return BadRequest("Livro não encontrado");
         }
+
+        this.context.BibliotecaDatas.Remove(encontrarLivro);
+        await this.context.SaveChangesAsync();
+        return Ok(await this.context.BibliotecaDatas.ToListAsync());
+    }
+
+
+    [HttpPut("alterardados")]
+    public async Task<ActionResult<List<BibliotecaData>>> AlterarDados(BibliotecaData livro)
+    {
+
+        var encontrarLivro = await this.context.BibliotecaDatas.FindAsync(livro.Id);
+
+        if (encontrarLivro == null)
+        {
+            return BadRequest("Livro não encontrado");
+        }
+
+        encontrarLivro.Titulo = livro.Titulo;
+        encontrarLivro.Autor = livro.Autor;
+
+        await this.context.SaveChangesAsync();
         return Ok(await this.context.BibliotecaDatas.ToListAsync());
 
     }
 
-    [HttpGet("MostrarDados")]
+
+    [HttpGet("mostrardados")]
     public async Task<ActionResult<List<BibliotecaData>>> MostrarDados()
     {
         return Ok(await this.context.BibliotecaDatas.ToListAsync());

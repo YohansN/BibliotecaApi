@@ -4,7 +4,7 @@
 
 namespace Biblioteca.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class primeraMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
